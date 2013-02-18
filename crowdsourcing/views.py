@@ -292,8 +292,9 @@ def survey_detail(request, slug):
         if request.method == 'POST':
             return _survey_submit(request, survey)
         forms = forms_for_survey(survey, request)
-    elif need_login:
+    elif need_login: #we force login
         forms = ()
+        return HttpResponseRedirect(_login_url(request))
     elif survey.can_have_public_submissions():
         return _survey_results_redirect(request, survey)
     else: # Survey is closed with private results.
